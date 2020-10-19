@@ -1,0 +1,254 @@
+<div class="row" *ngIf="proizvodiIzMagacina.length > 0" >
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+
+        <br />
+        <br />
+
+        <table class="text-center table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="th-sm">Naziv</th>
+                    <th class="th-sm">Proizvodjac</th>
+                    <th class="th-sm">Kolicina</th>
+                    <th class="th-sm">Tip proizvoda</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let i of proizvodiIzMagacina'>
+                    <td>{{i.naziv}}</td>
+                    <td>{{i.proizvodjac}}</td>
+                    <td>{{i.kolicina}}</td>
+                    <td>{{i.tip}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="btn-toolbar text-center" role="toolbar" aria-label="filter" *ngIf="proizvodiIzMagacina.length > 0">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" class="btn btn-primary" (click)="setFilterNaziv()">Filter naziv</button>
+                <button type="button" class="btn btn-primary" (click)="setFilterProizvodjac()">Filter
+                    proizvodjac</button>
+                <button type="button" class="btn btn-primary" (click)="setFilterKolicina()">Filter kolicina</button>
+                <button type="button" class="btn btn-primary" (click)="ucitajSve()">SVE</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+
+        <table *ngIf="filterNaziv == true">
+            <tr>
+                <label for="naziv" *ngIf="filterNaziv == true">Naziv: </label> &nbsp; &nbsp;
+                <input type="text" name="naziv" [(ngModel)]="naziv" *ngIf="filterNaziv == true">
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" (click)="filtrirajNaziv()">Nadji</button>
+                </td>
+            </tr>
+        </table>
+
+        <table *ngIf="filterProizvodjac == true">
+            <tr>
+                <label for="proizvodjac">Proizvodjac : </label> &nbsp; &nbsp;
+                <input type="text" name="proizvodjac" [(ngModel)]="proizvodjac">
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" (click)="filtrirajProizvodjac()">Nadji</button>
+                </td>
+            </tr>
+        </table>
+
+        <table *ngIf="filterKolicina == true">
+            <tr>
+                <label for="kolicina">Kolicina: </label> &nbsp; &nbsp;
+                <input type="text" name="kolicina" [(ngModel)]="kolicina">
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" (click)="filtrirajKolicinu()">Nadji</button>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="btn-toolbar text-center" role="toolbar" aria-label="sort" *ngIf="proizvodiIzMagacina.length > 0">
+            <div class="btn-group mr-2" role="group" aria-label="Second group">
+                <button type="button" class="btn btn-primary" (click)="sortNazivA()">Naziv ASC</button>
+                <button type="button" class="btn btn-primary" (click)="sortNazivD()">Naziv DESC</button>
+                <button type="button" class="btn btn-primary" (click)="sortProizvodjacA()">Proizvodjac ASC</button>
+                <button type="button" class="btn btn-primary" (click)="sortProizvodjacD()">Proizvodjac DESC</button>
+                <button type="button" class="btn btn-primary" (click)="sortKolicinaA()">Kolicina ASC</button>
+                <button type="button" class="btn btn-primary" (click)="sortKolicinaD()">Kolicina DESC</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>
+
+<div class="row" *ngIf="proizvodiIzMagacina.length == 0">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="color: red; font-style: italic;">
+        Nema proizvoda u magacinu
+    </div>
+</div>
+<hr />
+<hr />
+
+<div class="row" *ngIf="naruceniProizvodi.length > 0">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>Naruceni proizvodi</h3>
+        <hr />
+        <table class="text-center table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="th-sm">Naziv</th> 
+                    <th class="th-sm">Proizvodjac</th> 
+                    <th class="th-sm">Kolicina</th> 
+                </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor='let i of naruceniProizvodi'>
+                <td>{{i.proFinal.naziv}}</td> 
+                <td>{{i.proFinal.proizvodjac}}</td> 
+                <td>{{i.proFinal.kolicina}}</td> 
+                <td><button type="button" class="button" (click)="otkaziPorudzbinu(i)">Otkazi</button></td>
+                <!--implementiraj otkazivanje -->
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row" *ngIf="naruceniProizvodi.length == 0">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="color: red; font-style: italic;">
+        Nema narucenih proizvoda za dati rasadnik
+    </div>
+</div>
+<hr />
+<hr />
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="color:red; font-style: italic;">
+
+        <label for="onlinepro">Jos proizvoda? : </label> &nbsp; &nbsp;
+        <button type="button" class="btn btn-secondary" (click)="setOnlineTrue()">ONLINE PRODAVNICA</button>
+    </div>
+</div>
+
+<br />
+<hr />
+
+<div class="row" *ngIf="online == true">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h3>ONLINE PRODAVNICA</h3>
+        <hr />
+        <table class="text-center table table-striped table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th>Naziv</th> &nbsp;&nbsp;&nbsp;
+                    <th>Proizvodjac</th> &nbsp;&nbsp;&nbsp;
+                    <th>Kolicina dostupna</th> &nbsp;&nbsp;&nbsp;
+
+
+                </tr>
+            </thead>
+            <tr *ngFor='let i of proizvodiUPonudi'>
+                <td>{{i.naziv}}</td> &nbsp;&nbsp;&nbsp;
+                <td>{{i.proizvodjac}}</td> &nbsp;&nbsp;&nbsp;
+                <td>{{i.kolicina}}</td> &nbsp;&nbsp;&nbsp;
+
+                <td><button type="button" class="button" (click)="setKolTrue(i)">NARUCI</button></td>
+                <!--implementiraj narucivanje -->
+
+            </tr>
+        </table>
+        <div *ngIf="setKol == true">
+            KolicinaUnos: <input type="text" name="kol" [(ngModel)]="kol">
+        </div>
+        <button *ngIf="setKol == true" class="btn-secondary" (click)="naruci()">UBACI</button>
+        <br />
+
+        <hr />
+
+        <button type="button" class="button btn-primary" (click)="zavrsiKupovinu()">ZAVRSI</button>
+        <br/>
+        <hr/>
+        <div class="btn-toolbar text-center" role="toolbar" aria-label="filter" *ngIf="proizvodiUPonudi.length > 0">
+            <div class="btn-group mr-2" role="group" aria-label="Third group">
+                <button type="button" class="btn btn-primary" (click)="setFilterNazivPro()">Filter naziv</button>
+                <button type="button" class="btn btn-primary" (click)="setFilterTip()">Filter tip</button>
+                
+                <button type="button" class="btn btn-primary" (click)="ucitajSveUPonudi()">SVE</button>
+
+            </div>
+        </div>
+
+        <br/>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <table *ngIf="filterNazivPro == true">
+            <tr>
+                <label for="nazivPro">NazivProizvoda: </label> &nbsp; &nbsp;
+                <input type="text" name="nazivPro" [(ngModel)]="nazivPro">
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" (click)="filtrirajNazivPro()">Nadji</button>
+                </td>
+            </tr>
+        </table>
+
+        <table *ngIf="filterTip == true">
+            <tr>
+                <label for="tip">Tip: </label> &nbsp; &nbsp;
+                <input type="text" name="tip" [(ngModel)]="tip">
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="btn btn-primary" (click)="filtrirajTip()">Nadji</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+{{kol}}

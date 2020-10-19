@@ -1,0 +1,19 @@
+.top-buffer { 
+    margin-top:20px;
+    margin:auto
+}
+.popover {
+    
+    top: -100px !important;
+    left: 90px !important;
+    height: 500px;
+    width: 700px;
+    
+}
+ 
+.popover1 {
+    top: -100px !important;
+    left: 90px !important;
+    height: 700px;
+    width: 700px;
+}
