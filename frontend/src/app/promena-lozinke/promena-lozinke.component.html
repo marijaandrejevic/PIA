@@ -1,0 +1,68 @@
+<div class="background">
+    <div class="row ">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 " style="color: black;">
+            <form class="text-center border border-light p-4" [formGroup] = "promenaLozForm" (ngSubmit) = "onSubmit()" >
+                <p class="h2 mb-2">
+                    Promena lozinke
+                </p>
+                <div class="form-group">
+                    <label for="ime">Korisnicko ime</label>
+                    <input type="text" class="form-control" id="ime" formControlName = "korime">
+                    <div class="error" *ngIf="submitted && myForm.korime.errors?.required">
+                        Korisnicko ime je obavezno
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loz">Stara lozinka</label>
+                    <input type="password" class="form-control" id="loz" formControlName = "lozinka_stara">
+                    <div class="error" *ngIf="submitted && myForm.lozinka_stara.errors?.required">
+                        Stara lozinka je obavezna
+                    </div>
+                    <div class="error" *ngIf = "submitted && myForm.lozinka_stara.errors?.invalidPassword">
+                        Lozinka nije ispostovala odredjenu formu
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loz_nova">Nova lozinka</label>
+                    <input type="password" class="form-control" id="loz_nova" formControlName = "loz_nova">
+                    <div class="error" *ngIf="submitted && myForm.loz_nova.errors?.required">
+                        Nova lozinka je obavezna
+                    </div>
+                    <div class="error" *ngIf = "submitted && myForm.loz_nova.errors?.invalidPassword">
+                        Nova lozinka nije ispostovala odredjenu formu
+                    </div>
+                    <div class="error">{{lozinke_nova_stara_razlika}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loz_nova_potvrda">Nova lozinka potvrda</label>
+                    <input type="password" class="form-control" id="loz_nova_potvrda" formControlName = "loz_nova_potvrda">
+                    <div class="error" *ngIf="submitted && myForm.loz_nova_potvrda.errors?.required">
+                        Potvrda nove lozinke je obavezna
+                    </div>
+                    <div class="error" *ngIf = "submitted && myForm.loz_nova_potvrda.errors?.invalidPassword">
+                        Potvrda nove lozinke nije ispostovala odredjenu formu
+                    </div>
+                    <div class="error">{{lozinke_poklapanje}}</div>
+                    
+                </div>
+                
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Promeni lozinku</button>
+                </div>
+    
+    
+    
+    
+                </form>
+                <div class="error text-center">
+                    {{message}}
+                </div>
+        </div>
+        
+    </div>
+    </div>

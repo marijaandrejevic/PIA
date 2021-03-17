@@ -1,0 +1,67 @@
+<div class="background">
+<div class="row">
+    <div class="col-md-12">
+        &nbsp;
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-md-12">
+        <div class="tekst" style="top: 50px"><h3>Administrator</h3></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        &nbsp;
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-md-7">
+        &nbsp;
+    </div>
+    <div class="col-md-5">
+        
+        <a class="mojLink" routerLink = "/modifikacije/1">Modifikuj</a>  |
+        <a class="mojLink" routerLink ="/modifikacije/2">Obrisi</a>  |
+        <a class="mojLink" routerLink ="/modifikacije/3">Novi poljoprivrednik</a>  |  
+        <a class="mojLink" routerLink ="/modifikacije/4">Novo preduzece</a>
+    </div>
+</div>
+<br/>
+<div class="red">{{message}}</div>
+<table class="table">
+    <tr>
+        <th>Naziv</th>
+        <th>Mejl</th>
+        <th>Tip</th>
+        <th>Odobri zahtev</th>
+        <th>Odbij zahtev</th>
+    </tr>
+    <tr *ngFor='let zah of ispis'>
+        <td>{{zah.ime}}</td>
+        <td>{{zah.email}}</td>
+        <td>{{zah.tip}}</td>
+        <td><button type="button" (click)="odobri(zah)">ODOBRI</button></td>
+        <td><button type="button" (click)="odbij(zah)">ODBIJ</button></td>
+    </tr>
+</table>
+<br/>
+<br/>
+
+<div class="row text-center">
+    <div class="col-md-3">
+        &nbsp;
+    </div>
+    <div class="col-md-6">
+        <a class="mojLink" routerLink='/login'>Izlogujte se</a>
+        <br/>
+        <br/>
+        <div class="tekst">Zelite promenu lozinke? </div>
+        <a class="mojLink" routerLink = '/promenaLoz'>Promeni lozinku</a>
+    </div>
+   
+    
+    <div class="col-md-3">
+        &nbsp;
+    </div>
+</div>
+</div>

@@ -1,0 +1,57 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "navigationUrls": [
+    "http://localhost:4200/regPolj",
+    "http://localhost:4200/regPred"
+  ],
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html",
+          "/login/login.component.html",
+          "http://localhost:4200/regPolj",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js",
+          " https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",
+          "https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap",
+          "https://fonts.googleapis.com/icon?family=Material+Icons",
+          "https://www.google.com/recaptcha/api.js",
+          "./src/**/*.{html,htm,css,js}"
+          
+        ]
+      }
+    }, {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+   {
+     "name": "api_login",
+     "urls": [
+       "http://localhost:4200/login",
+       "http://localhost:4200/regPolj",
+       "http://localhost:4200/regPred"
+     ],
+     "cacheConfig": {
+       "strategy": "performance",
+       "maxSize": 1000,
+       "maxAge": "1h"
+     }
+   }
+  ]
+
+}

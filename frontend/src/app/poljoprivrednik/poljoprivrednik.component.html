@@ -1,0 +1,135 @@
+<div class="row text-center">
+    <div class="col-sm-2">
+       
+    </div>
+    <div class="col-sm-8">
+        <table class="table">
+            <tr>
+                <th>Naziv</th>
+                <th>Mesto</th>
+                <th>Broj zasadjenih</th>
+                <th>Broj slobodnih</th>
+                <th>Kolicina vode</th>
+                <th>Trenutna temperatura</th>
+            </tr>
+           <tr *ngFor='let r of rasadnici'>
+               <td>{{r.naziv}}</td>
+               <td>{{r.mesto}}</td>
+               <td>{{r.brojZasadjenih}}</td>
+               <td>{{r.brojSlobodnihMesta}}</td>
+               <td>{{r.trenutnoVode}}</td>
+               <td>{{r.trenutnaTemperatura}}</td>
+               <td><button class="button" (click)="prikaz(r)">PRIKAZI</button></td>
+           </tr>
+        </table>
+    </div>
+</div> 
+<div class="row text-center">
+    <div class="col-sm-2">
+        &nbsp;
+    </div>
+    <div class="col-sm-8">
+        <button type="button" (click) = "dodajRasadnik()">Dodaj rasadnik</button>
+    </div>
+    <div class="col-sm-2">
+        &nbsp;
+    </div>
+</div>
+<div class="row">
+    &nbsp;
+</div>
+<div class="row">
+    &nbsp;
+</div>
+<div class="row text-center" *ngIf = "dodaj == true">
+    <div class="col-sm-2">
+        &nbsp;
+    </div>
+    <div class="col-sm-8">
+        <form class="text-center border border-light p-4" *ngIf = 'dodaj == true' [formGroup] = "dodajRasadForm" (ngSubmit) = "dodajRasUBazu()" >
+            <p class="h2 mb-2">
+                Dodaj rasad
+            </p>
+            <div class="form-group">
+                <label for="ime">Naziv</label>
+                <input type="text" class="form-control" id="ime" formControlName = "naziv">
+                <div class="error" *ngIf="submitted && myForm.naziv.errors?.required">
+                    Ime rasadnika je obavezno
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="poljoprivrednik">Poljoprivrednik</label>
+                <input type="text" class="form-control" id="poljoprivrednik" formControlName = "poljoprivrednik">
+                <div class="error" *ngIf="submitted && myForm.poljoprivrednik.errors?.required">
+                    Poljoprivrednikovo ime obavezno
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="mesto">Mesto</label>
+                <input type="text" class="form-control" id="mesto" formControlName = "mesto">
+                <div class="error" *ngIf="submitted && myForm.mesto.errors?.required">
+                    Mesto rasadnika je obavezno
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="sirina">Sirina</label>
+                <input type="number" class="form-control" id="sirina" formControlName = "sirina" min="0" >
+                <div class="error" *ngIf="submitted && myForm.sirina.errors?.required">
+                    Unos sirine je obavezan
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="duzina">Duzina</label>
+                <input type="number" class="form-control" id="duzina" formControlName = "duzina" min="0">
+                <div class="error" *ngIf="submitted && myForm.duzina.errors?.required">
+                    Unos duzine je obavezan
+                </div>
+            </div>
+            
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Dodaj rasadnik</button>
+            </div>
+
+
+
+
+            </form>
+
+          
+
+    </div>
+
+
+    <div class="col-sm-2">
+        &nbsp;
+    </div>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-3">
+        &nbsp;
+    </div>
+    <div class="col-md-6">
+        <a class="mojLink" routerLink='/login'>Izlogujte se</a>
+        <br/>
+        <br/>
+        <div class="tekst">Zelite promenu lozinke? </div>
+        <a class="mojLink" routerLink = '/promenaLoz'>Promeni lozinku</a>
+    </div>
+   
+    
+    <div class="col-md-3">
+        &nbsp;
+    </div>
+</div>
+
+
+
+<div class="bottomRight">
+    <ul>
+        <li *ngFor = 'let ime of rasadNezeljeneVrednosti'>
+            Rasadnik {{ime}} zahteva odrzavanje
+        </li>
+    </ul>
+</div>

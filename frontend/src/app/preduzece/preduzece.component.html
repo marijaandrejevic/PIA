@@ -1,0 +1,224 @@
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <h4 class="text-center " >Proizvodi</h4>
+        <hr/>
+        <hr/>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <table class="text-center border border-light p-4">
+            <tr>
+                <th>Naziv</th> &nbsp;&nbsp;
+                <th>Tip</th> &nbsp;&nbsp;
+                <th>Kolicina</th> &nbsp;&nbsp;
+                <th>Cena</th> &nbsp;&nbsp;
+                <th>Napredak</th> &nbsp;&nbsp;
+                <th>NaStanju</th> &nbsp;&nbsp;
+            </tr>
+            <tr *ngFor="let pro of niz">
+                <td>{{pro.naziv}}</td> &nbsp;&nbsp;
+                <td>{{pro.tipProizvoda}}</td> &nbsp;&nbsp;
+                <td>{{pro.kolicina}}</td> &nbsp;&nbsp;
+                <td>{{pro.cena}}</td> &nbsp;&nbsp;
+                <td>{{pro.maxNapredak}}</td> &nbsp;&nbsp;
+                <td>{{pro.naStanju}}</td> &nbsp;&nbsp;
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr/>
+<hr/>
+
+<div class="row" *ngIf="nizNarucenih.length > 0">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h3>Sve narudzbine</h3>
+        <hr />
+        <table class="text-center table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="th-sm">Poljoprivrednik</th> 
+                    <th class="th-sm">Proizvodi</th> 
+                    <th class="th-sm">Status</th> 
+                    <th class="th-sm">Rasadnik</th>
+                    <th class="th-sm">Datum Narudzbine</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor='let i of nizNarucenih'>
+                <td>{{i.poljoprivrednik}}</td> 
+                <td>
+                    <ul *ngFor="let j of i.proizvodi">
+                        <li>{{j.naziv}}/{{j.tip}}/{{j.kolicina}}</li>
+                    </ul>
+                </td> 
+                
+                <td>{{i.status}}</td> 
+                <td>{{i.rasadnik}}</td>
+                <td>{{i.datumNarudzbine | date: 'medium'}}</td>
+                <td><button type="button" class="btn btn-primary" (click)="prihvati(i)" [disabled]="i.status == 'ISPORUKA U TOKU' || i.status == 'ISPORUCENA'" >Prihvati</button></td>
+                <td><button type="button" class="btn btn-primary" (click)="odbij(i)" [disabled]="i.status == 'ISPORUKA U TOKU' || i.status == 'ISPORUCENA'"  >Odbij</button></td>
+                <td><button type="button" class="btn btn-primary" (click) = "zavrsi(i)" [disabled]="i.status == 'ISPORUCENA' || i.status == 'NIJE ISPORUCENA' || i.status == 'NA CEKANJU'"> Zavrsi</button></td>
+                
+                
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="background">
+
+    <div class="row ">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4 " style="color: black;">
+            <form class="text-center border border-light p-4" [formGroup]="OsnovneInfoGroup" (ngSubmit)="next()"
+                *ngIf="osnovneInfoVisible == true">
+                <p class="h2 mb-2">
+                    Dodaj proizvod
+                </p>
+                <div class="form-group">
+                    <label for="naziv">Naziv proizvoda</label>
+                    <input type="text" class="form-control" id="naziv" formControlName="naziv">
+                    <div class="error" *ngIf="submittedOsnovno && OsnovneInfo.naziv.errors?.required">
+                        Naziv proizvoda je obavezan
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label for="tip">Tip</label>
+                    <select name="tip" class="form-control" formControlName="tip">
+                        <option value="sadnica">Sadnica</option>
+                        <option value="preparat">Preparat</option>
+                    </select>
+                    <div class="error" *ngIf="submittedOsnovno && OsnovneInfo.tip.errors?.required">
+                        Tip je obavezan
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Unos dodatno</button>
+                </div>
+
+            </form>
+
+
+            <form class="text-center border border-light p-4" [formGroup]="dodatneInfoGroup" (ngSubmit)="finish()"
+                *ngIf="dodatneInfoVisible == true">
+                <p class="h2 mb-2">
+                    Dodatne info
+                </p>
+                <div class="form-group">
+                    <label for="kolicina">Kolicina proizvoda</label>
+                    <input type="text" class="form-control" id="kolicina" formControlName="kolicina">
+                    <div class="error" *ngIf="submittedDodatno && DodatneInfo.kolicina.errors?.required">
+                        Obavezno polje
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cena">Jedinicna cena</label>
+                    <input type="text" class="form-control" id="cena" formControlName="cena">
+                    <div class="error" *ngIf="submittedDodatno && DodatneInfo.cena.errors?.required">
+                        Obavezno polje
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="napredak">Napredak</label>
+                    <input type="text" class="form-control" id="napredak" formControlName="napredak">
+                    <div class="error" *ngIf="submittedDodatno && DodatneInfo.napredak.errors?.required">
+                        Obavezno polje
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Dodaj proizvod</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="background">
+
+    <div class="row ">
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4 " style="color: black;">
+            <form class="text-center border border-light p-4">
+                <p class="h2 mb-2">
+                    Suspenduj proizvod
+                </p>
+                <div class="form-group">
+                    <label for="pro">Proizvod</label>
+                    <input type="text" class="form-control" id="pro" [(ngModel)]="proizvod" name="pro">
+
+                </div>
+
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" (click)="obrisi()">Suspenduj proizvod</button>
+                </div>
+
+
+
+
+
+            </form>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="row text-center" *ngIf = "statistika == true">
+    <div class="col-md-2">
+        &nbsp;
+    </div>
+    <div class="col-md-8">
+        <table >
+            <tr *ngFor = "let sta of nizBrojki">
+                <td>{{sta.datum}}</td>
+                <td>{{sta.kolicina}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row text-center">
+    <div class="col-md-3">
+        &nbsp;
+    </div>
+    <div class="col-md-6">
+        <button type="button" (click)="brojPoDanima()">STATISTIKA</button>
+        <br/>
+        <br/>
+        <a class="mojLink" routerLink='/login'>Izlogujte se</a>
+        <br/>
+        <br/>
+        <div class="tekst">Zelite promenu lozinke? </div>
+        <a class="mojLink" routerLink = '/promenaLoz'>Promeni lozinku</a>
+    </div>
+   
+    
+    <div class="col-md-3">
+        &nbsp;
+    </div>
+</div>
+

@@ -1,0 +1,126 @@
+<div class="row text-center">
+    <div class="col-sm-9"></div>
+    <div class="col-sm-3">
+        <button class="button btn-link" (click)="idiNaMagacin()"> Magacin </button>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div *ngFor='let mesta of mesta_po_i'>
+    <div class="container">
+        <div class="row top-buffer justify-content-md-center table">
+
+            <div class="col-sm-1 table" *ngFor='let i of mesta'>
+                <div (mouseover)="showPopover(i)" *ngIf="i.sadnica.naziv!=''">
+                    <img src="../../assets/images/zauzeto_mesto.jpg" width="65px" height="65px">
+                    <div class="popover text-center" *ngIf="popoverIsVisible[i.i*this.rasadnik.sirina+i.j] == true">
+
+                        <b><i>{{i.sadnica.naziv}}</i></b>
+                        <br />
+
+                        Proizvodi : {{i.sadnica.proizvodjac}}
+                        <br />
+                        <br />
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success " role="progressbar"
+                                [attr.aria-valuenow]="i.sadnica.napredak" aria-valuemin="0" aria-valuemax="i.sadnica.maxNapredak"
+                                style="min-width: 2em;" [style.width]="((i.sadnica.napredak*100/i.sadnica.maxNapredak)/100)*100 + '%'">
+                                {{i.sadnica.napredak*100/i.sadnica.maxNapredak}}%
+                            </div>
+                        </div>
+
+
+                        
+
+
+                        <br />
+                        <button class="button" (click)="dodajPreparate(i)">Dodaj preparate</button>
+                        <button class="button" (click)="hidePopover(i)">Skloni</button>
+                        <button class="button" (click) = "izvadiSadnicu(i)">Izvadi</button>
+                    </div>
+                   
+                </div>
+                <table class="popover" *ngIf="preparatiIsVisible[i.i*this.rasadnik.sirina+i.j] == true">
+                    <tr>
+                        <th>NazivPreparata</th>
+                        <th>PrimeniOpciono</th>
+                    </tr>
+                    <tr *ngFor='let el of preparatiURasadniku'>
+                        <td>{{el.nazivPreparata}}</td>
+                        <td><button class="button" (click)="primeni(el.nazivPreparata, el.proizvodjac, i)">Primeni</button></td>
+                    </tr>
+                </table>
+               
+                <div class="popover" *ngIf = "flagVadjenjeSpremno[i.i*this.rasadnik.sirina + i.j] == true">
+                    Izvadi sadnicu: 
+                    <br/>
+                    <button class="button" (click)="izvadiSadnicu(i)">XXX</button>
+
+                </div>
+               
+
+                <div (mouseover)="showPopover(i)" *ngIf="i.sadnica.naziv == ''">
+                    <img src="../../assets/images/prazno_mesto.jpg" width="65px" height="65px">
+                    <div class="popover text-center" *ngIf="popoverIsVisible[i.i*this.rasadnik.sirina+i.j] == true">
+
+                        <br />
+                        <button class="button" (click)="dodajSadnicu(i)">Dodaj Sadnicu</button>
+                        <button class="button" (click)="hidePopover(i)">Skloni</button>
+                    </div>
+                </div>
+                <table class="popover" *ngIf = "sadnicaIsVisible[i.i*this.rasadnik.sirina+i.j] == true">
+                    <tr>
+                        <th>NazivSadnice</th>
+                        <th>Dodaj</th>
+                    </tr>
+                    <tr *ngFor='let el of sadniceURasadniku'>
+                        <td>{{el.nazivPreparata}}</td>
+                        <td>
+                            <button class="button" (click)="dodaj(el, i)">DODAJ</button>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf = 'sadniceURasadniku.length == 0' class="text-center">
+                        <td colspan = "2">
+                            <button class="button" (click) = "skloniPrikazSadnica_nemaih(i)">Nema sadnica</button>
+                        </td>
+                    </tr>
+                   
+                </table>
+                
+            </div>
+            <div class="w-100"></div>
+
+
+        </div>
+
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">&nbsp;</div>
+<div class="row top-buffer justify-content-md-center">
+    <div class="col-xl-3 col-sm-6 py-2">
+        <div class="card text-white bg-success h-100">
+            <div class="card-body bg-success text-center">
+
+                <h6 class="text-uppercase">KOLICINA VODE</h6>
+                <h1 class="display-4">{{rasadnik.trenutnoVode}}</h1>
+                <button type="button" (click)="AzurirajVodu(1)" class="btn button-primary"><b>+1</b></button>
+                &nbsp; &nbsp;
+                <button type="button" (click)="AzurirajVodu(-1)" class="btn button-primary"><b>-1</b></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-sm-6 py-2">
+        <div class="card text-white bg-success h-100">
+            <div class="card-body bg-success text-center">
+
+                <h6 class="text-uppercase">TEMPERATURA</h6>
+                <h1 class="display-4">{{rasadnik.trenutnaTemperatura}}</h1>
+                <button type="button" class="btn button-primary " (click)="AzurirajTemp(1)"><b>+1</b></button>
+                &nbsp; &nbsp;
+                <button type="button" class="btn button-primary" (click)="AzurirajTemp(-1)"><b>-1</b></button>
+            </div>
+        </div>
+    </div>
+</div>
